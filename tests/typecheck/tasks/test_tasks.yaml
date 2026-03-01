@@ -21,3 +21,19 @@
             return x + 1
 
         reveal_type(test_task) # N: Revealed type is "django.tasks.base.Task[[x: builtins.int], builtins.int]"
+
+-   case: task_backend_queues
+    main: |
+        from typing import Any
+        from typing_extensions import reveal_type
+        from django.tasks import Task, TaskResult
+        from django.tasks.backends.base import BaseTaskBackend
+
+        class TestTaskBackend(BaseTaskBackend):
+
+            def enqueue(self, task: Task, args: list[Any], kwargs: dict[str, Any]) -> TaskResult:
+                pass
+
+        backend = TestTaskBackend("default", {})
+
+        reveal_type(backend.queues)  # N: Revealed type is "builtins.set[builtins.str]"

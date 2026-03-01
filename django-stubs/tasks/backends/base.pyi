@@ -10,7 +10,7 @@ class BaseTaskBackend(metaclass=ABCMeta):
     supports_get_result: bool
     supports_priority: bool
     alias: str
-    queues: list[str]
+    queues: set[str]
     options: dict[str, Any]
     def __init__(self, alias: str, params: dict[str, Any]) -> None: ...
     def validate_task(self, task: Task) -> None: ...
